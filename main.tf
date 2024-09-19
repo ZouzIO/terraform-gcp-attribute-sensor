@@ -20,7 +20,7 @@ resource "google_project_iam_member" "internal" {
 resource "google_service_account_iam_member" "impersonator" {
   service_account_id = google_service_account.this.name
 
-  role   = "roles/iam.serviceAccountTokenCreator"
+  role   = "roles/iam.workloadIdentityUser"
   member = "serviceAccount:zouz-env-agg@web-official-377608.iam.gserviceaccount.com"
 }
 
@@ -28,13 +28,16 @@ resource "google_bigquery_dataset" "this" {
   dataset_id = "billing_export"
   location   = "us-central1"
 
-  access {
-    dataset {
+  dynamic "access" {
+    for_each = length(var.attribute_authorized_dataset_name) > 0 ? [1] : []
+    content {
       dataset {
-        project_id = "zouz-prod"
-        dataset_id = var.attribute_authorized_dataset_name
+        dataset {
+          project_id = "zouz-prod"
+          dataset_id = var.attribute_authorized_dataset_name
+        }
+        target_types = ["VIEWS"]
       }
-      target_types = ["VIEWS"]
     }
   }
 

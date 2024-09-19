@@ -1,8 +1,6 @@
 locals {
   required_gcp_apis = [
-    "cloudresourcemanager.googleapis.com",
     "sqladmin.googleapis.com",
-    "iam.googleapis.com"
   ]
 
   sa_roles = [
