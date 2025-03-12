@@ -24,45 +24,26 @@ resource "google_service_account_iam_member" "impersonator" {
   member = "serviceAccount:zouz-env-agg@web-official-377608.iam.gserviceaccount.com"
 }
 
-resource "google_bigquery_dataset" "this" {
-  dataset_id = "billing_export"
-  location   = "us-central1"
+resource "google_bigquery_dataset_iam_member" "bigquery_internal" {
+  count = var.account_type == "management" && var.authorize_attribute_dataset ? 1 : 0
 
-  dynamic "access" {
-    for_each = length(var.attribute_authorized_dataset_name) > 0 ? [1] : []
-    content {
-      dataset {
-        dataset {
-          project_id = "zouz-prod"
-          dataset_id = var.attribute_authorized_dataset_name
-        }
-        target_types = ["VIEWS"]
-      }
+  dataset_id = var.billing_export_dataset_name
+
+  role   = "roles/bigquery.dataViewer"
+  member = "serviceAccount:${google_service_account.this.email}"
+}
+
+resource "google_bigquery_dataset_access" "authorized_dataset" {
+  count = var.account_type == "management" && var.authorize_attribute_dataset ? 1 : 0
+
+  dataset_id = var.billing_export_dataset_name
+  project    = data.google_project.current.project_id
+  dataset {
+    dataset {
+      project_id = "zouz-prod"
+      dataset_id = "${replace(var.organization_id, "-", "_")}_reports"
     }
+    target_types = ["VIEWS"]
   }
 
-  access {
-    user_by_email = google_service_account.this.email
-    role          = "READER"
-  }
-
-  access {
-    role          = "OWNER"
-    special_group = "projectOwners"
-  }
-
-  access {
-    role          = "READER"
-    special_group = "projectReaders"
-  }
-
-  access {
-    role          = "WRITER"
-    special_group = "projectWriters"
-  }
-
-  access {
-    role          = "OWNER"
-    user_by_email = "billing-export-bigquery@system.gserviceaccount.com"
-  }
 }
