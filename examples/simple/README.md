@@ -13,7 +13,7 @@ No providers.
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_billing_export"></a> [billing\_export](#module\_billing\_export) | ../../ | n/a |
+| <a name="module_attribute_management"></a> [attribute\_management](#module\_attribute\_management) | ../../ | n/a |
 
 ## Resources
 
@@ -21,7 +21,12 @@ No resources.
 
 ## Inputs
 
-No inputs.
+| Name | Description | Type | Default | Required |
+|------|-------------|------|---------|:--------:|
+| <a name="input_billing_export_dataset_name"></a> [billing\_export\_dataset\_name](#input\_billing\_export\_dataset\_name) | The Billing Export dataset name. | `string` | n/a | yes |
+| <a name="input_billing_export_table_name"></a> [billing\_export\_table\_name](#input\_billing\_export\_table\_name) | The Billing Export table name. | `string` | n/a | yes |
+| <a name="input_organization_id"></a> [organization\_id](#input\_organization\_id) | The Organization ID provided by Attribute. | `string` | n/a | yes |
+| <a name="input_token"></a> [token](#input\_token) | The token provided by Attribute. | `string` | n/a | yes |
 
 ## Outputs
 

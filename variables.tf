@@ -5,13 +5,13 @@ variable "organization_id" {
 
 variable "billing_export_dataset_name" {
   type        = string
-  description = "(**Options**) The name of the billing export dataset."
+  description = "(**Optional**) The name of the billing export dataset."
   default     = ""
 }
 
 variable "billing_export_table_name" {
   type        = string
-  description = "(**Options**) The name of the billing export table."
+  description = "(**Optional**) The name of the billing export table."
   default     = ""
 }
 
@@ -29,7 +29,7 @@ variable "enable_required_apis" {
 
 variable "account_type" {
   type        = string
-  description = "(**Required**) The GCP Account type. Available options are: 'management' or 'sub'."
+  description = "(**Required**) The GCP Account type. Available options are: 'management' or 'sub'. In case of 'management', the 'billing_export_dataset_name' and 'billing_export_table_name' inputs must be provided."
 
   validation {
     condition     = contains(["management", "sub"], var.account_type)

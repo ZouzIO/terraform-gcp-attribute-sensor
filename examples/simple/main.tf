@@ -8,15 +8,19 @@ terraform {
 }
 
 provider "google" {
-  project = "project-id"
+  project = "my-project-12345"
   region  = "us-central1"
 }
 
-module "billing_export" {
+module "attribute_management" {
   source = "../../"
 
-  billing_export_dataset_name       = "billing_export"
-  attribute_authorized_dataset_name = "<deployment_id>_reports"
+  token           = var.token
+  organization_id = var.organization_id
 
-  enable_required_apis = true
+  authorize_attribute_dataset = true
+
+  account_type                = "management"
+  billing_export_dataset_name = var.billing_export_dataset_name
+  billing_export_table_name   = var.billing_export_table_name
 }
