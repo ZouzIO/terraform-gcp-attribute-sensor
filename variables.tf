@@ -15,12 +15,6 @@ variable "billing_export_table_name" {
   default     = ""
 }
 
-variable "authorize_attribute_dataset" {
-  type        = bool
-  description = "(*Optional*) Whether to authorize the Attribute dataset access to the billing exports."
-  default     = true
-}
-
 variable "enable_required_apis" {
   type        = bool
   description = "(*Optional*) Whether to enabled required GCP APIs. Default is 'false'."

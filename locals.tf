@@ -7,5 +7,6 @@ locals {
     "roles/monitoring.viewer",
     "roles/cloudsql.viewer",
     "roles/bigquery.jobUser",
+    "roles/compute.viewer",
   ]
 }

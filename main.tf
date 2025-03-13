@@ -25,25 +25,10 @@ resource "google_service_account_iam_member" "impersonator" {
 }
 
 resource "google_bigquery_dataset_iam_member" "bigquery_internal" {
-  count = var.account_type == "management" && var.authorize_attribute_dataset ? 1 : 0
+  count = var.account_type == "management" ? 1 : 0
 
   dataset_id = var.billing_export_dataset_name
 
   role   = "roles/bigquery.dataViewer"
   member = "serviceAccount:${google_service_account.this.email}"
-}
-
-resource "google_bigquery_dataset_access" "authorized_dataset" {
-  count = var.account_type == "management" && var.authorize_attribute_dataset ? 1 : 0
-
-  dataset_id = var.billing_export_dataset_name
-  project    = data.google_project.current.project_id
-  dataset {
-    dataset {
-      project_id = "zouz-prod"
-      dataset_id = "${replace(var.organization_id, "-", "_")}_reports"
-    }
-    target_types = ["VIEWS"]
-  }
-
 }
