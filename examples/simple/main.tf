@@ -13,7 +13,8 @@ provider "google" {
 }
 
 module "attribute_management" {
-  source = "../../"
+  source  = "ZouzIO/attribute-sensor/gcp"
+  version = "~> 1.0"
 
   token           = var.token
   organization_id = var.organization_id
