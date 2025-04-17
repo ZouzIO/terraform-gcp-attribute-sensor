@@ -36,9 +36,42 @@ variable "account_type" {
   }
 }
 
-variable "account_name" {
-  type        = string
-  description = "(*Optional*) The GCP Account name. If not provided, the account name will be extracted with the datasource."
+variable "billing_info" {
+  type        = object({
+    billing_export_table = string
+    billing_export_email = string
+    billing_export_project_id = string
+  })
+  description = "(*Optional*) The existing billing export information, should contain the information from the management account."
+  default     = null
+  nullable = true
+
+  validation {
+    condition     = (
+      var.account_type != "sub" || (
+        can(var.billing_info) && can(var.billing_info.billing_export_email) && can(var.billing_info.billing_export_project_id) &&
+        var.billing_info.billing_export_table != "" &&
+        var.billing_info.billing_export_email != "" &&
+        var.billing_info.billing_export_project_id != ""
+      )
+    )
+    error_message = "The 'billing_info' input must be provided for sub accounts."
+  }
+
+  validation {
+    condition     = (
+      var.account_type != "sub" || (
+        can(var.billing_info) && can(var.billing_info.billing_export_table) &&
+        length(regexall("^[a-zA-Z0-9_]+\\.[a-zA-Z0-9_]+\\.[a-zA-Z0-9_]+$", var.billing_info.billing_export_table)) > 0
+      )
+    )
+    error_message = "The 'billing_info.billing_export_table' field must conform to the form `<billing_export_project_id>.<billing_export_dataset_name>.<billing_export_table_name>`."
+  }
+}
+
+variable "existing_account_id" {
+  type = string
+  description = "(**Optional**) The existing GCP Account ID. If not provided, a new service account will be created"
   default     = ""
 }
 
