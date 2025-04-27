@@ -69,7 +69,7 @@ variable "billing_info" {
     condition = (
       var.account_type != "sub" || (
         can(var.billing_info) && can(var.billing_info.billing_export_table) &&
-        length(regexall("^[a-zA-Z0-9_]+\\.[a-zA-Z0-9_]+\\.[a-zA-Z0-9_]+$", var.billing_info.billing_export_table)) > 0
+        length(regexall("^[a-zA-Z0-9_-]+\\.[a-zA-Z0-9_-]+\\.[a-zA-Z0-9_-]+$", var.billing_info.billing_export_table)) > 0
       )
     )
     error_message = "The 'billing_info.billing_export_table' field must conform to the form `<billing_export_project_id>.<billing_export_dataset_name>.<billing_export_table_name>`."
