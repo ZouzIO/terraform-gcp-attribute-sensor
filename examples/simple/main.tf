@@ -23,3 +23,20 @@ module "attribute_management" {
   billing_export_dataset_name = var.billing_export_dataset_name
   billing_export_table_name   = var.billing_export_table_name
 }
+
+module "attribute_subaccount1" {
+  # source  = "ZouzIO/attribute-sensor/gcp"
+  source = "../../"
+  # version = "~> 1.0"
+
+
+  token           = var.token
+  organization_id = var.organization_id
+
+  account_type = "sub"
+  billing_info = {
+    billing_export_email      = module.attribute_management.service_account_email
+    billing_export_table      = module.attribute_management.billing_export_table
+    billing_export_project_id = module.attribute_management.project_id
+  }
+}
