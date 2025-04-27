@@ -13,7 +13,8 @@ No providers.
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_attribute_management"></a> [attribute\_management](#module\_attribute\_management) | ../../ | n/a |
+| <a name="module_attribute_management"></a> [attribute\_management](#module\_attribute\_management) | ZouzIO/attribute-sensor/gcp | ~> 1.0 |
+| <a name="module_attribute_subaccount1"></a> [attribute\_subaccount1](#module\_attribute\_subaccount1) | ../../ | n/a |
 
 ## Resources
 
