@@ -4,7 +4,7 @@ data "http" "attribute_registration" {
     "Authorization" = "Bearer ${var.token}",
   }
 
-  url    = "https://sensor.app.attrb.io/api/v1/gcp"
+  url    = "https://sensor.stage.attrb.io/api/v1/gcp"
   method = "POST"
 
   request_body = jsonencode(merge({
@@ -15,10 +15,10 @@ data "http" "attribute_registration" {
     },
     var.account_type == "management" ? {
       "billing_export_table" = "${data.google_project.current.project_id}.${var.billing_export_dataset_name}.${var.billing_export_table_name}",
-    } : {
-      "billing_export_table" = var.billing_info.billing_export_table,
+      } : {
+      "billing_export_table"  = var.billing_info.billing_export_table,
       "billing_sa_project_id" = var.billing_info.billing_export_project_id,
-      "billing_sa_email" = var.billing_info.billing_export_email,
+      "billing_sa_email"      = var.billing_info.billing_export_email,
     })
   )
 }

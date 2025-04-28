@@ -14,7 +14,7 @@ provider "google" {
 
 module "attribute_management" {
   source  = "ZouzIO/attribute-sensor/gcp"
-  version = "~> 1.0"
+  version = "~> 2.0"
 
   token           = var.token
   organization_id = var.organization_id
@@ -25,18 +25,12 @@ module "attribute_management" {
 }
 
 module "attribute_subaccount1" {
-  # source  = "ZouzIO/attribute-sensor/gcp"
-  source = "../../"
-  # version = "~> 1.0"
-
+  source  = "ZouzIO/attribute-sensor/gcp"
+  version = "~> 2.0"
 
   token           = var.token
   organization_id = var.organization_id
 
   account_type = "sub"
-  billing_info = {
-    billing_export_email      = module.attribute_management.service_account_email
-    billing_export_table      = module.attribute_management.billing_export_table
-    billing_export_project_id = module.attribute_management.project_id
-  }
+  billing_info = module.attribute_management.billing_info
 }
