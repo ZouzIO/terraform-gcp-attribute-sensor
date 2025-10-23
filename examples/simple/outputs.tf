@@ -1,7 +1,7 @@
-output "billing_exporter_dataset_name" {
-  value = module.billing_export.billing_exporter_dataset_name
+output "service_account_email" {
+  value = module.attribute_sensor.service_account_email
 }
 
-output "internal_service_account_email" {
-  value = module.billing_export.internal_service_account_email
+output "billing_info" {
+  value = module.attribute_sensor.billing_info
 }

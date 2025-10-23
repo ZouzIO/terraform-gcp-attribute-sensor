@@ -5,32 +5,20 @@ terraform {
       version = ">= 6.0, <7.0"
     }
   }
+
+  backend "gcs" {}
 }
 
-provider "google" {
-  project = "my-project-12345"
-  region  = "us-central1"
-}
+provider "google" {}
 
-module "attribute_management" {
-  source  = "ZouzIO/attribute-sensor/gcp"
-  version = "~> 2.0"
+module "attribute_sensor" {
+  source = "../.."
 
   token           = var.token
   organization_id = var.organization_id
 
-  account_type                = "management"
+  account_type                = var.account_type
   billing_export_dataset_name = var.billing_export_dataset_name
   billing_export_table_name   = var.billing_export_table_name
-}
-
-module "attribute_subaccount1" {
-  source  = "ZouzIO/attribute-sensor/gcp"
-  version = "~> 2.0"
-
-  token           = var.token
-  organization_id = var.organization_id
-
-  account_type = "sub"
-  billing_info = module.attribute_management.billing_info
+  billing_info                = var.billing_info
 }
