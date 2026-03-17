@@ -78,7 +78,11 @@ No modules.
 | <a name="input_account_name"></a> [account\_name](#input\_account\_name) | (*Optional*) The GCP Account name. If not provided, the account name will be extracted with the datasource. | `string` | `""` | no |
 | <a name="input_billing_export_dataset_name"></a> [billing\_export\_dataset\_name](#input\_billing\_export\_dataset\_name) | (**Optional**) The name of the billing export dataset. | `string` | `""` | no |
 | <a name="input_billing_export_table_name"></a> [billing\_export\_table\_name](#input\_billing\_export\_table\_name) | (**Optional**) The name of the billing export table. | `string` | `""` | no |
+<<<<<<< HEAD
 | <a name="input_billing_info"></a> [billing\_info](#input\_billing\_info) | (*Optional*) The existing billing export information. Required for sub accounts. | <pre>object({<br>    billing_export_table      = string<br>    billing_export_email      = string<br>    billing_export_project_id = string<br>  })</pre> | <pre>{<br>  "billing_export_email": "",<br>  "billing_export_project_id": "",<br>  "billing_export_table": ""<br>}</pre> | no |
+=======
+| <a name="input_billing_info"></a> [billing\_info](#input\_billing\_info) | (*Optional*) The existing billing export information. | <pre>object({<br>    billing_export_table      = string<br>    billing_export_email      = string<br>    billing_export_project_id = string<br>  })</pre> | <pre>{<br>  "billing_export_email": "",<br>  "billing_export_project_id": "",<br>  "billing_export_table": ""<br>}</pre> | no |
+>>>>>>> adcf1c8ca9a7706bb673c6c6744b3006c73bec08
 | <a name="input_enable_required_apis"></a> [enable\_required\_apis](#input\_enable\_required\_apis) | (*Optional*) Whether to enabled required GCP APIs. Default is 'false'. | `bool` | `false` | no |
 
 ## Outputs
