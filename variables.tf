@@ -54,28 +54,12 @@ variable "billing_info" {
     billing_export_email      = string
     billing_export_project_id = string
   })
-  description = "(*Optional*) The existing billing export information. Required for sub accounts."
+  description = "(*Optional*) The existing billing export information."
 
   default = {
     billing_export_table      = ""
     billing_export_email      = ""
     billing_export_project_id = ""
-  }
-
-  validation {
-    condition = (
-      var.account_type != "sub" || (
-        var.billing_info.billing_export_table != "" &&
-        var.billing_info.billing_export_email != "" &&
-        var.billing_info.billing_export_project_id != "" &&
-        length(regexall("^(.*)\\.(.*)\\.(.*)$", var.billing_info.billing_export_table)) > 0
-      )
-    )
-    error_message = <<EOT
-When account_type is "sub", billing_info must be fully provided:
-- billing_export_table, billing_export_email, billing_export_project_id must be non-empty.
-- billing_export_table must match "<project>.<dataset>.<table>" format.
-EOT
   }
 }
 
