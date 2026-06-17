@@ -8,5 +8,7 @@ locals {
     "roles/cloudsql.viewer",
     "roles/bigquery.jobUser",
     "roles/compute.viewer",
+    "roles/redis.viewer",
+    "roles/memorystore.viewer"
   ]
 }
