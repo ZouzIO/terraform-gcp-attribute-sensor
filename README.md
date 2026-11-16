@@ -31,6 +31,18 @@ module "attribute_subaccount1" {
   billing_info = module.attribute_management.billing_info
 }
 ```
+## Project
+By default, the resources are created in the project configured on the `google` provider ( the `project` argument or the `GOOGLE_PROJECT` environment variable ). Alternatively, the project can be passed to the module via the [project\_id](#input\_project\_id) input. The input takes precedence over the provider configuration and doesn't require a project to be configured on the provider, which allows deploying the module to multiple projects with a single provider, i.e.:
+```hcl
+provider "google" {}
+
+module "attribute_subaccount" {
+  for_each = toset(["my-project-1", "my-project-2"])
+  ...
+  account_type = "sub"
+  project_id   = each.value
+}
+```
 ## Registration
 The registration process is fully automated. The module will register the sensor with the Attribute API via the `http` provider.
 ## Account name
@@ -63,7 +75,6 @@ No modules.
 | [google_project_service.this](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/project_service) | resource |
 | [google_service_account.this](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/service_account) | resource |
 | [google_service_account_iam_member.impersonator](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/service_account_iam_member) | resource |
-| [google_client_config.current](https://registry.terraform.io/providers/hashicorp/google/latest/docs/data-sources/client_config) | data source |
 | [google_project.current](https://registry.terraform.io/providers/hashicorp/google/latest/docs/data-sources/project) | data source |
 | [google_projects.current](https://registry.terraform.io/providers/hashicorp/google/latest/docs/data-sources/projects) | data source |
 | [http_http.attribute_registration](https://registry.terraform.io/providers/hashicorp/http/latest/docs/data-sources/http) | data source |
@@ -80,6 +91,7 @@ No modules.
 | <a name="input_billing_export_table_name"></a> [billing\_export\_table\_name](#input\_billing\_export\_table\_name) | (**Optional**) The name of the billing export table. | `string` | `""` | no |
 | <a name="input_billing_info"></a> [billing\_info](#input\_billing\_info) | (*Optional*) The existing billing export information. | <pre>object({<br>    billing_export_table      = string<br>    billing_export_email      = string<br>    billing_export_project_id = string<br>  })</pre> | <pre>{<br>  "billing_export_email": "",<br>  "billing_export_project_id": "",<br>  "billing_export_table": ""<br>}</pre> | no |
 | <a name="input_enable_required_apis"></a> [enable\_required\_apis](#input\_enable\_required\_apis) | (*Optional*) Whether to enabled required GCP APIs. Default is 'false'. | `bool` | `false` | no |
+| <a name="input_project_id"></a> [project\_id](#input\_project\_id) | (*Optional*) The ID of the GCP project to deploy the resources to. If not provided, the project configured on the `google` provider is used. | `string` | `null` | no |
 
 ## Outputs
 

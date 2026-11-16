@@ -3,6 +3,12 @@ variable "organization_id" {
   description = "(**Required**) The Organization ID provided by Attribute."
 }
 
+variable "project_id" {
+  type        = string
+  description = "(*Optional*) The ID of the GCP project to deploy the resources to. If not provided, the project configured on the `google` provider is used."
+  default     = null
+}
+
 variable "billing_export_dataset_name" {
   type        = string
   description = "(**Optional**) The name of the billing export dataset."

@@ -1,10 +1,12 @@
 resource "google_project_service" "this" {
   for_each = var.enable_required_apis ? toset(local.required_gcp_apis) : []
 
+  project = data.google_project.current.project_id
   service = each.value
 }
 
 resource "google_service_account" "this" {
+  project      = data.google_project.current.project_id
   account_id   = "attribute-sensor"
   display_name = "The Attribute Sensor Service Account"
 }
@@ -27,6 +29,7 @@ resource "google_service_account_iam_member" "impersonator" {
 resource "google_bigquery_dataset_iam_member" "bigquery_internal" {
   count = var.account_type == "management" ? 1 : 0
 
+  project    = data.google_project.current.project_id
   dataset_id = var.billing_export_dataset_name
 
   role   = "roles/bigquery.dataViewer"

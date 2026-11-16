@@ -8,6 +8,12 @@ variable "token" {
   description = "The token provided by Attribute."
 }
 
+variable "project_id" {
+  type        = string
+  description = "(*Optional*) The ID of the GCP project to deploy the resources to. If not provided, the project configured on the provider is used."
+  default     = null
+}
+
 variable "billing_export_dataset_name" {
   type        = string
   description = "The Billing Export dataset name."
